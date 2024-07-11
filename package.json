@@ -14,7 +14,9 @@
     "migrate:rollback": "prisma migrate reset --force",
     "test": "jest --detectOpenHandles",
     "start": "nodemon index.ts",
-    "build": "prisma generate && rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist"
   },
   "pre-commit": [
     "ts.check",
@@ -49,6 +51,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.12.0",
+    "pre-commit": "^1.2.2",
     "prisma": "^5.16.1",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
