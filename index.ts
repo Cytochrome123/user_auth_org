@@ -1,4 +1,4 @@
-import app from './server';
+import {instance } from './server';
 
-export const listeningInstance = app.listen();
+export const listeningInstance = instance.listen();
 // app.listen()

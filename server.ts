@@ -54,7 +54,7 @@ class App {
     }
 }
 
-const instance = Container.get(App);
+export const instance = Container.get(App);
 // export const listeningInstance = instance.listen();
 
 const app = instance.getServer();
