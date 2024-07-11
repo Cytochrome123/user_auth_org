@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const server_1 = __importDefault(require("../../server"));
 const client_1 = require("@prisma/client");
-const __1 = require("../..");
+// import { listeningInstance } from '../..';
 const prisma = new client_1.PrismaClient();
 describe('Auth Endpoints', () => {
     beforeAll(async () => {
@@ -16,7 +16,7 @@ describe('Auth Endpoints', () => {
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
-        __1.listeningInstance.close();
+        // listeningInstance.close();
     }, 10000);
     it('should register user successfully with default organization', async () => {
         const res = await (0, supertest_1.default)(server_1.default)
