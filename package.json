@@ -8,13 +8,12 @@
     "start:prod": "NODE_ENV=prod ts-node index.ts",
     "tsc:build": "tsc",
     "start:compiled": "node dist/index.js",
-    "seed": "ts-node src/Database/seeds/seed_voices.ts",
     "prisma:generate": "prisma generate",
     "migrate:status": "prisma migrate status",
     "migrate:latest": "prisma migrate deploy",
     "migrate:rollback": "prisma migrate reset --force",
     "test": "jest --detectOpenHandles",
-    "start": "node index.js"
+    "start": "nodemon index.ts"
   },
   "author": "Hudhayfah",
   "license": "ISC",

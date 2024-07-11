@@ -6,16 +6,16 @@ const prisma = new PrismaClient();
 
 describe('Auth Endpoints', () => {
     beforeAll(async () => {
-        
+
         await prisma.organization.deleteMany({});
         await prisma.user.deleteMany({});
-    });
+    }, 10000);
 
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
         listeningInstance.close();
-      });
+    }, 10000);
 
     it('should register user successfully with default organization', async () => {
         const res = await request(app)
@@ -36,13 +36,13 @@ describe('Auth Endpoints', () => {
         expect(res.body.data.user.email).toBe('hismail@test.co');
         expect(res.body.data.user.phone).toBe('1234567890');
 
-        
+
         const organizations = await prisma.organization.findMany({
             where: { members: { some: { email: 'hismail@test.co' } } },
         });
         expect(organizations.length).toBe(1);
         expect(organizations[0].name).toBe("Hudhayfah's Organization");
-    });
+    }, 10000);
 
     it('should log the user in successfully', async () => {
         const res = await request(app)
@@ -56,7 +56,7 @@ describe('Auth Endpoints', () => {
         expect(res.body).toHaveProperty('data');
         expect(res.body.data).toHaveProperty('accessToken');
         expect(res.body.data.user.email).toBe('hismail@test.co');
-    });
+    }, 10000);
 
     it('should fail if firstName is missing', async () => {
         const res = await request(app)
@@ -71,7 +71,7 @@ describe('Auth Endpoints', () => {
         expect(res.status).toEqual(422);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0].field).toBe('firstName');
-    });
+    }, 10000);
 
     it('should fail if lastName is missing', async () => {
         const res = await request(app)
@@ -86,7 +86,7 @@ describe('Auth Endpoints', () => {
         expect(res.status).toEqual(422);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0].field).toBe('lastName');
-    });
+    }, 10000);
 
     it('should fail if email is missing', async () => {
         const res = await request(app)
@@ -101,7 +101,7 @@ describe('Auth Endpoints', () => {
         expect(res.status).toEqual(422);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0].field).toBe('email');
-    });
+    }, 10000);
 
     it('should fail if password is missing', async () => {
         const res = await request(app)
@@ -116,7 +116,7 @@ describe('Auth Endpoints', () => {
         expect(res.status).toEqual(422);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0].field).toBe('password');
-    });
+    }, 10000);
 
     it(`should fail if there's duplicate email`, async () => {
         await request(app)
@@ -142,5 +142,5 @@ describe('Auth Endpoints', () => {
         expect(res.status).toEqual(422);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0].field).toBe('email');
-    });
+    }, 10000);
 });

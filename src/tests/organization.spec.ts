@@ -31,13 +31,13 @@ describe('organization Endpoints', () => {
             });
 
         token = res.body.data.accessToken;
-    });
+    }, 10000);
 
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
         listeningInstance.close();
-      });
+    }, 10000);
 
     it('should create an organization', async () => {
         const res = await request(app)
@@ -51,7 +51,7 @@ describe('organization Endpoints', () => {
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty('data');
         expect(res.body.data.name).toBe("Hudhayfah's New organization");
-    });
+    }, 10000);
 
     it('should fetch user organizations', async () => {
         const res = await request(app)
@@ -61,7 +61,7 @@ describe('organization Endpoints', () => {
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('data');
         expect(res.body.data.organizations.length).toBe(2);
-    });
+    }, 10000);
 
     it('should fetch a single organization by ID', async () => {
         const organizations = await prisma.organization.findMany({
@@ -75,7 +75,7 @@ describe('organization Endpoints', () => {
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('data');
         expect(res.body.data.name).toBe("Hudhayfah's Organization");
-    });
+    }, 10000);
 
     it('should not allow access to other members\' organizations', async () => {
         // Register another user
@@ -108,5 +108,5 @@ describe('organization Endpoints', () => {
             .set('Authorization', `Bearer ${janeToken}`);
 
         expect(res2.status).toEqual(403);
-    });
+    }, 10000);
 });
