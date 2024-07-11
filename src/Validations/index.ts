@@ -21,7 +21,7 @@ class Validator {
       })
     }
 
-    return validationError(res, customErrArr, errs[0].msg, 'email')
+    return validationError(res, customErrArr, errs[0].msg, errs[0].path)
     // return validationError(res, errs)
   };
 }
