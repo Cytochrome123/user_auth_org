@@ -1,13 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (data: { email: string, id: string }): string => {
-  // return jwt.sign(data, process.env.JWT_SECRET!);
-  return jwt.sign(data, "JWT_SECRET");
+  return jwt.sign(data, process.env.JWT_SECRET!);
 }
 
 export const  encodeOTP = (code: string, email: string): string => {
-  // return jwt.sign({ code, email }, process.env.JWT_SECRET!, { expiresIn: "15m" })
-  return jwt.sign({ code, email }, "JWT_SECRET", { expiresIn: "15m" })
+  return jwt.sign({ code, email }, process.env.JWT_SECRET!, { expiresIn: "15m" })
 }
 
 export const decodeOTP = (token: string): { email: string, code: string } => {

@@ -10,8 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
-  url      = "postgresql://postgres.qyofjdawnympgfrsxsao:stage_two@hng@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
+  url      = env("DATABASE_URL")
 }
 
 // schema.prisma

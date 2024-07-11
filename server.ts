@@ -60,3 +60,14 @@ export const instance = Container.get(App);
 const app = instance.getServer();
 
 export default app;
+
+
+
+
+// from package.json
+
+// "pre-commit": [
+//     "ts.check",
+//     "build",
+//     "add-build"
+//   ],
