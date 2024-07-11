@@ -14,8 +14,13 @@
     "migrate:rollback": "prisma migrate reset --force",
     "test": "jest --detectOpenHandles",
     "start": "nodemon index.ts",
-    "build": "tsc"
+    "build": "rimraf dist && tsc"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "author": "Hudhayfah",
   "license": "ISC",
   "devDependencies": {
