@@ -13,7 +13,8 @@
     "migrate:latest": "prisma migrate deploy",
     "migrate:rollback": "prisma migrate reset --force",
     "test": "jest --detectOpenHandles",
-    "start": "nodemon index.ts"
+    "start": "nodemon index.ts",
+    "build": "tsc"
   },
   "author": "Hudhayfah",
   "license": "ISC",
