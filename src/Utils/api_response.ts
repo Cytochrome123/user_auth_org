@@ -40,7 +40,12 @@ export function badRequest<T> (res: Response, errors: T, message = "Bad request"
   })
 }
 
-export function validationError<T> (res: Response, errors: T, message = "Validation Error") {
+export function validationError<T> (res: Response, errors: T, message = "Validation Error", path: string) {
+  if(path == 'email') {
+    return res.status(401).json({
+      errors,
+    })
+  }
   return res.status(422).json({
     errors,
   })

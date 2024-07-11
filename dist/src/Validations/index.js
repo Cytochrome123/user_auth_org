@@ -19,7 +19,7 @@ class Validator {
                     message: err.msg
                 });
             }
-            return (0, api_response_1.validationError)(res, customErrArr, errs[0].msg);
+            return (0, api_response_1.validationError)(res, customErrArr, errs[0].msg, 'email');
             // return validationError(res, errs)
         };
     }

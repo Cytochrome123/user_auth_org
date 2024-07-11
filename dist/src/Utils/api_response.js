@@ -42,7 +42,12 @@ function badRequest(res, errors, message = "Bad request") {
         success: false,
     });
 }
-function validationError(res, errors, message = "Validation Error") {
+function validationError(res, errors, message = "Validation Error", path) {
+    if (path == 'email') {
+        return res.status(401).json({
+            errors,
+        });
+    }
     return res.status(422).json({
         errors,
     });
