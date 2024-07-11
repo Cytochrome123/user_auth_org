@@ -106,6 +106,8 @@ export class AuthValidatorAdapter extends BaseAdapter {
 
       return user;
     } catch (error) {
+      console.log(error);
+      
       return this.catchError(error);
     }
   }

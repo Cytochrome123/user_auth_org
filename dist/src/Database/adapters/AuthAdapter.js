@@ -128,6 +128,7 @@ let AuthValidatorAdapter = class AuthValidatorAdapter extends __1.BaseAdapter {
                 return user;
             }
             catch (error) {
+                console.log(error);
                 return this.catchError(error);
             }
         };
