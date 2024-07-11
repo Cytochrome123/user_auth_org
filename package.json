@@ -13,7 +13,8 @@
     "migrate:status": "prisma migrate status",
     "migrate:latest": "prisma migrate deploy",
     "migrate:rollback": "prisma migrate reset --force",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "start": "node index.js"
   },
   "author": "Hudhayfah",
   "license": "ISC",
