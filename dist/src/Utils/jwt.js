@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodeToken = exports.decodeOTP = exports.encodeOTP = exports.generateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const generateToken = (data) => {
-    return jsonwebtoken_1.default.sign(data, process.env.JWT_SECRET);
+    // return jwt.sign(data, process.env.JWT_SECRET!);
+    return jsonwebtoken_1.default.sign(data, "JWT_SECRET");
 };
 exports.generateToken = generateToken;
 const encodeOTP = (code, email) => {
-    return jsonwebtoken_1.default.sign({ code, email }, process.env.JWT_SECRET, { expiresIn: "15m" });
+    // return jwt.sign({ code, email }, process.env.JWT_SECRET!, { expiresIn: "15m" })
+    return jsonwebtoken_1.default.sign({ code, email }, "JWT_SECRET", { expiresIn: "15m" });
 };
 exports.encodeOTP = encodeOTP;
 const decodeOTP = (token) => {
