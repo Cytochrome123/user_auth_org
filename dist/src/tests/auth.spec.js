@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const index_1 = __importStar(require("../../index"));
+const server_1 = __importStar(require("../../server"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 describe('Auth Endpoints', () => {
@@ -38,10 +38,10 @@ describe('Auth Endpoints', () => {
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
-        index_1.listeningInstance.close();
+        server_1.listeningInstance.close();
     }, 10000);
     it('should register user successfully with default organization', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Hudhayfah',
@@ -64,7 +64,7 @@ describe('Auth Endpoints', () => {
         expect(organizations[0].name).toBe("Hudhayfah's Organization");
     }, 10000);
     it('should log the user in successfully', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/login')
             .send({
             email: 'hismail@test.co',
@@ -76,7 +76,7 @@ describe('Auth Endpoints', () => {
         expect(res.body.data.user.email).toBe('hismail@test.co');
     }, 10000);
     it('should fail if firstName is missing', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             lastName: 'Ismail',
@@ -89,7 +89,7 @@ describe('Auth Endpoints', () => {
         expect(res.body.errors[0].field).toBe('firstName');
     }, 10000);
     it('should fail if lastName is missing', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Hudhayfah',
@@ -102,7 +102,7 @@ describe('Auth Endpoints', () => {
         expect(res.body.errors[0].field).toBe('lastName');
     }, 10000);
     it('should fail if email is missing', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Hudhayfah',
@@ -115,7 +115,7 @@ describe('Auth Endpoints', () => {
         expect(res.body.errors[0].field).toBe('email');
     }, 10000);
     it('should fail if password is missing', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Hudhayfah',
@@ -128,7 +128,7 @@ describe('Auth Endpoints', () => {
         expect(res.body.errors[0].field).toBe('password');
     }, 10000);
     it(`should fail if there's duplicate email`, async () => {
-        await (0, supertest_1.default)(index_1.default)
+        await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Ammaar',
@@ -137,7 +137,7 @@ describe('Auth Endpoints', () => {
             password: 'password123',
             phone: '0987654321',
         });
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Ammaar',

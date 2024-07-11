@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app, { listeningInstance } from '../../index';
+import app, { listeningInstance } from '../../server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

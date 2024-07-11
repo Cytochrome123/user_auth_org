@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const index_1 = __importStar(require("../../index"));
+const server_1 = __importStar(require("../../server"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 describe('organization Endpoints', () => {
@@ -37,7 +37,7 @@ describe('organization Endpoints', () => {
         await prisma.organization.deleteMany({});
         await prisma.user.deleteMany({});
         // Register and login a user to get a token
-        await (0, supertest_1.default)(index_1.default)
+        await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Hudhayfah',
@@ -46,7 +46,7 @@ describe('organization Endpoints', () => {
             password: 'password123',
             phone: '1234567890',
         });
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/login')
             .send({
             email: 'hismail@test.co',
@@ -57,10 +57,10 @@ describe('organization Endpoints', () => {
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
-        index_1.listeningInstance.close();
+        server_1.listeningInstance.close();
     }, 10000);
     it('should create an organization', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/organizations')
             .set('Authorization', `Bearer ${token}`)
             .send({
@@ -72,7 +72,7 @@ describe('organization Endpoints', () => {
         expect(res.body.data.name).toBe("Hudhayfah's New organization");
     }, 10000);
     it('should fetch user organizations', async () => {
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .get('/api/organizations')
             .set('Authorization', `Bearer ${token}`);
         expect(res.statusCode).toEqual(200);
@@ -83,7 +83,7 @@ describe('organization Endpoints', () => {
         const organizations = await prisma.organization.findMany({
             where: { members: { some: { email: 'hismail@test.co' } } },
         });
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .get(`/api/organizations/${organizations[0].orgId}`)
             .set('Authorization', `Bearer ${token}`);
         expect(res.statusCode).toEqual(200);
@@ -92,7 +92,7 @@ describe('organization Endpoints', () => {
     }, 10000);
     it('should not allow access to other members\' organizations', async () => {
         // Register another user
-        await (0, supertest_1.default)(index_1.default)
+        await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/register')
             .send({
             firstName: 'Test',
@@ -101,7 +101,7 @@ describe('organization Endpoints', () => {
             password: 'password123',
             phone: '0987654321',
         });
-        const res = await (0, supertest_1.default)(index_1.default)
+        const res = await (0, supertest_1.default)(server_1.default)
             .post('/api/auth/login')
             .send({
             email: 'test@test.com',
@@ -112,7 +112,7 @@ describe('organization Endpoints', () => {
         const organizations = await prisma.organization.findMany({
             where: { members: { some: { email: 'hismail@test.co' } } },
         });
-        const res2 = await (0, supertest_1.default)(index_1.default)
+        const res2 = await (0, supertest_1.default)(server_1.default)
             .get(`/api/organizations/${organizations[0].orgId}`)
             .set('Authorization', `Bearer ${janeToken}`);
         expect(res2.status).toEqual(403);
