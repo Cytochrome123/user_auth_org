@@ -35,6 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.instance = void 0;
 require("dotenv/config");
 require("reflect-metadata");
 const express_1 = __importDefault(require("express"));
@@ -79,7 +80,7 @@ App = __decorate([
     (0, typedi_1.Service)(),
     __metadata("design:paramtypes", [Routes_1.default])
 ], App);
-const instance = typedi_1.default.get(App);
+exports.instance = typedi_1.default.get(App);
 // export const listeningInstance = instance.listen();
-const app = instance.getServer();
+const app = exports.instance.getServer();
 exports.default = app;

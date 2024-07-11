@@ -1,9 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listeningInstance = void 0;
-const server_1 = __importDefault(require("./server"));
-exports.listeningInstance = server_1.default.listen();
+const server_1 = require("./server");
+exports.listeningInstance = server_1.instance.listen();
 // app.listen()
