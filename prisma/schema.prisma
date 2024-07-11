@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Define the User model
+model User {
+  userId    String  @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String  @unique
+  password  String
+  phone     String?
+
+  organizations Organization[] // Many-to-many relationship with Organization
+  createdOrgs   Organization[] @relation("CreatedByUser") // One-to-many relationship for orgs created by user
+
+  @@map("users")
+}
+
+// Define the Organization model
+model Organization {
+  orgId       String  @id @default(uuid())
+  name        String
+  description String?
+
+  createdBy   User   @relation("CreatedByUser", fields: [createdById], references: [userId]) // One-to-many relationship back to User
+  createdById String
+  members     User[] // Many-to-many relationship with User
+
+  @@map("organizations")
+}
+
+// model User {
+//   userId            String         @id @default(uuid())
+//   firstName         String
+//   lastName          String
+//   email             String         @unique
+//   password          String
+//   phone             String?
+//   organizations     Organization[]
+
+//   // Organization      Organization?  @relation(fields: [organizationId], references: [orgId])
+//   // organizationId String?
+
+//   @@map("users")
+// }
+
+// model Organization {
+//   orgId       String  @id @default(uuid())
+//   name        String
+//   description String?
+
+//   creator   User   @relation(fields: [creatorId], references: [userId])
+//   creatorId String // This field stores the userId of the creator
+
+//   members User[] @relation("members", references: [userId])
+
+//   @@map("organisations")
+// }
