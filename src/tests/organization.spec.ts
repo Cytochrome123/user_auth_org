@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../server';
+import app, { listeningInstance } from '../../index';
 import { PrismaClient } from '@prisma/client';
 // import { listeningInstance } from '../..';
 
@@ -37,7 +37,7 @@ describe('organization Endpoints', () => {
     afterAll(async () => {
         await prisma.$disconnect();
         // app.listen().close();
-        // listeningInstance.close();
+        listeningInstance.close();
     }, 10000);
 
     it('should create an organization', async () => {
