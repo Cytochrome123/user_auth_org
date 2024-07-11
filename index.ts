@@ -1,3 +1,4 @@
 import app from './server';
 
-app.listen()
+export const listeningInstance = app.listen();
+// app.listen()
